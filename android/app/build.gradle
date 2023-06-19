@@ -33,6 +33,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
+    namespace "com.example.lifelist"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
