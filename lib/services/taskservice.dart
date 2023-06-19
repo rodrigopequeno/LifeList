@@ -30,7 +30,7 @@ class TaskService extends ChangeNotifier {
     tasks = await fetchTasksFromDB(taskIds);
     int doneTasks =
         tasks.where((element) => element!.isComplete == true).length;
-    if (tasks.length > 0) {
+    if (tasks.isNotEmpty) {
       completionPercentage = (doneTasks / tasks.length) * 100;
     }
     //await bucketService.setActiveSingleBucket(bucket);

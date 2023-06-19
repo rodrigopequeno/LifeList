@@ -107,7 +107,7 @@ class CreateBucketService extends ChangeNotifier {
                   ),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
-                  primary: Theme.of(context)
+                  foregroundColor: Theme.of(context)
                       .secondaryHeaderColor, // button text color
                 ),
               ),
@@ -197,7 +197,7 @@ class CreateBucketService extends ChangeNotifier {
   void toggleBucketScope(scope) {
     activeSingleBucket.bucketScope = scope;
     if (activeSingleBucket.bucketScope == BucketScope.daily) {
-      activeSingleBucket.deadline = DateTime.now().add(Duration(days: 1));
+      activeSingleBucket.deadline = DateTime.now().add(const Duration(days: 1));
     }
     notifyListeners();
   }

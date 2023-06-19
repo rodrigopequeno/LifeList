@@ -4,7 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../constants/index.dart';
 import '../services/index.dart';
 
-
 class MyDropdownMenu extends StatefulWidget {
   const MyDropdownMenu({super.key, required this.actions});
   final String actions;
@@ -14,7 +13,7 @@ class MyDropdownMenu extends StatefulWidget {
 }
 
 class _MyDropdownMenuState extends State<MyDropdownMenu> {
-  late String? selectedItem = null;
+  late String? selectedItem;
   final List<String> _items = [
     TRAVEL,
     FINANCE,
@@ -47,7 +46,7 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
           value: selectedItem,
           onChanged: (newValue) {
             selectedItem = newValue!;
-            
+
             if (widget.actions == 'CREATE') {
               bucketModel.setActiveBucketType(selectedItem!);
             }

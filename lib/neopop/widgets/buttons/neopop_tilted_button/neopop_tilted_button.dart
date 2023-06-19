@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:lifelist/neopop/utils/color_utils.dart';
 import 'package:lifelist/neopop/utils/constants.dart';
 
-
 part 'neopop_tilted_button_painter.dart';
 part 'neopop_tilted_button_clipper.dart';
 part 'neopop_tilted_button_shadow_painter.dart';

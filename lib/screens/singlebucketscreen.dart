@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lifelist/extensions/string_extensions.dart';
 import 'package:lifelist/neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:lifelist/services/index.dart';
 import 'package:lifelist/services/pdfservice.dart';

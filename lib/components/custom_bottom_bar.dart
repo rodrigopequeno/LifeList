@@ -5,8 +5,9 @@ import '../constants/index.dart';
 import '../services/index.dart';
 
 class CustomBottomBar extends StatelessWidget {
-  CustomBottomBar({super.key, this.bucketListService});
-  BucketListService? bucketListService;
+  const CustomBottomBar({super.key, this.bucketListService});
+
+  final BucketListService? bucketListService;
 
   @override
   Widget build(BuildContext context) {

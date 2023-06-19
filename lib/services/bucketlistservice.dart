@@ -41,24 +41,24 @@ class BucketListService extends ChangeNotifier {
   }
 
   measureTimeLeft() {
-    filteredBuckets.forEach((element) {
+    for (var element in filteredBuckets) {
       if (element!.isCompleted) {
         element.timeLeft = "Done";
-        return;
+        continue;
       }
       if (element.bucketScope == BucketScope.onetime) {
         if (element.deadline.isBefore(DateTime.now())) {
           element.timeLeft = "Expired";
-          return;
+          continue;
         }
       }
       Duration difference = element.deadline.difference(DateTime.now());
       if (difference.inDays > 0) {
         element.timeLeft = "${difference.inDays.toString()} days left";
-        return;
+        continue;
       }
       element.timeLeft = "${difference.inHours.toString()} hours left";
-    });
+    }
   }
 
   deleteBucket(Bucket bucket) async {

@@ -2,11 +2,16 @@ import 'package:isar/isar.dart';
 import 'package:lifelist/models/bucket.dart';
 import 'package:lifelist/models/task.dart';
 import 'package:lifelist/models/user.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DBService {
   late Isar isar;
   initIsar() async {
-    isar = await Isar.open([UserSchema, TaskSchema, BucketSchema]);
+    final dir = await getApplicationDocumentsDirectory();
+    isar = await Isar.open(
+      [UserSchema, TaskSchema, BucketSchema],
+      directory: dir.path,
+    );
   }
 
   Future<int> addUser(User user) async {
