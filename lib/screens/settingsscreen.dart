@@ -83,11 +83,11 @@ class SettingsScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.feedback),
-                title: CustomText(text: AppLocalizations.of(context).submitFeedback,style:Theme.of(context).textTheme.displaySmall),
+                title: CustomText(
+                    text: AppLocalizations.of(context).submitFeedback,
+                    style: Theme.of(context).textTheme.displaySmall),
                 onTap: () {
                   navigationService.navigateNext(context, FEEDBACK);
-                    
-
                 },
               ),
               ListTile(
@@ -141,7 +141,6 @@ class SettingsScreen extends StatelessWidget {
                   );
                 },
               ),
-             
             ]),
           ),
         ),

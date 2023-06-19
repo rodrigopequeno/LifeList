@@ -79,7 +79,7 @@ var routes = <String, WidgetBuilder>{
   Routes.singleBucket: (contex) => BucketDetailsScreen(),
   Routes.profilePage: (context) => const ProfilePage(),
   Routes.settingsPage: (context) => SettingsScreen(),
-  Routes.feedbackPage: (context) => FeedbackForm(),
+  Routes.feedbackPage: (context) => const FeedbackForm(),
   Routes.explorePage: (context) => const ExploreScreen(),
 };
 

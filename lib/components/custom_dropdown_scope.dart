@@ -13,7 +13,7 @@ class MyDropDownScope extends StatefulWidget {
 }
 
 class _MyDropDownScopeState extends State<MyDropDownScope> {
-  late String? selectedItem = null;
+  late String? selectedItem;
   final List<String> _items = createScopes;
   @override
   Widget build(
@@ -32,7 +32,8 @@ class _MyDropDownScopeState extends State<MyDropDownScope> {
       child: Consumer2<CreateBucketService, BucketService>(
         builder: (context, bucketModel, editBucketModel, child) =>
             DropdownButton<String>(
-          hint: Text(AppLocalizations.of(context).selectscope, style: Theme.of(context).textTheme.bodyLarge),
+          hint: Text(AppLocalizations.of(context).selectscope,
+              style: Theme.of(context).textTheme.bodyLarge),
           iconEnabledColor: Colors.white,
           value: selectedItem,
           onChanged: (newValue) {
@@ -41,7 +42,6 @@ class _MyDropDownScopeState extends State<MyDropDownScope> {
             if (widget.actions == 'CREATE') {
               bucketModel.toggleBucketScope(stringToBucketScope[selectedItem]);
             }
-          
           },
           items: _items.map((item) {
             return DropdownMenuItem<String>(

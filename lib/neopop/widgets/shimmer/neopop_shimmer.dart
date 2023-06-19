@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:lifelist/neopop/utils/constants.dart';
 import 'package:lifelist/neopop/widgets/shimmer/shimmer_painter.dart';
 
-
 /// A NeoPop style shimmer effect.
 ///
 /// The shimmer is painted on the [child] widget. The [shimmerColor]

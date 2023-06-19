@@ -304,7 +304,7 @@ class _EmptyListWidgetState extends State<EmptyWidget>
         Theme.of(context)
             .typography
             .dense
-            .headline5!
+            .headlineSmall!
             .copyWith(color: const Color(0xff9da9c7));
     _subtitleTextStyle = widget.subtitleTextStyle ??
         Theme.of(context)

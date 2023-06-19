@@ -4,7 +4,11 @@ class IconTextWidget extends StatelessWidget {
   final IconData? iconData;
   final String text;
   final double iconSize;
-  const IconTextWidget({super.key, required this.iconData, required this.text, this.iconSize = 30.0});
+  const IconTextWidget(
+      {super.key,
+      required this.iconData,
+      required this.text,
+      this.iconSize = 30.0});
 
   @override
   Widget build(BuildContext context) {

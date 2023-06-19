@@ -59,7 +59,6 @@ class BucketService extends ChangeNotifier {
 
   addBucketsFromTemplate(
       Bucket bucket, List<Task> tasks, BuildContext context) async {
-    ;
     List<int> taskIds = await sendTasksToTaskService(tasks);
     bucket.tasks = taskIds;
     int bucketId = await addBucketToDB(bucket);

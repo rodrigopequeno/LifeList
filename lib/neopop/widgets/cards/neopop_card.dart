@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:lifelist/neopop/utils/color_utils.dart';
 import 'package:lifelist/neopop/utils/constants.dart';
 
-
 part 'neopop_card_painter.dart';
 
 /// [NeoPopCard] is a custom painted container with horizontal and vertical

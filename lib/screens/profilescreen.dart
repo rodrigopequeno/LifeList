@@ -13,7 +13,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      bottomNavigationBar: CustomBottomBar(),
+      bottomNavigationBar: const CustomBottomBar(),
       body: Consumer<UserService>(
         builder: (context, userModel, child) => FutureBuilder<void>(
             future: userModel.getUser(),
@@ -107,12 +107,13 @@ class ProfilePage extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                             child: Column(
                               children: [
-                                Text('Your account is not synced with DB'),
+                                const Text(
+                                    'Your account is not synced with DB'),
                                 TextButton(
                                     onPressed: () {
                                       userModel.syncAccount();
                                     },
-                                    child: Text('Sync Now'))
+                                    child: const Text('Sync Now'))
                               ],
                             ),
                           ),
