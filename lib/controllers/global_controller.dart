@@ -2,7 +2,6 @@ import 'package:lifelist/constants/index.dart';
 import 'package:lifelist/models/template.dart';
 
 import '../models/index.dart';
-import '../services/index.dart';
 
 addUserToDB(User user) async {
   int userId = await dbService.addUser(user);
@@ -67,7 +66,6 @@ Future<void> updateTaskInDB(Task task) async {
 }
 
 Future<List<BucketTemplate>> fetchTemplates() async {
-  var firebaseService = FirebaseService();
   List<BucketTemplate> templates = await firebaseService.getTemplates();
   return templates;
 }
