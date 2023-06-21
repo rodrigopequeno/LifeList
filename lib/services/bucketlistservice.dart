@@ -121,6 +121,8 @@ class BucketListService extends ChangeNotifier {
 
   resetScopeFilter() {
     filteredBuckets = buckets;
+    isScopeSelected = false;
+    selectedScope = BucketScope.all;
     notifyListeners();
   }
 }

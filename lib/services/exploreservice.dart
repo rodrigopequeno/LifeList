@@ -20,8 +20,9 @@ class ExploreService extends ChangeNotifier {
   }
 
   editCloneCountInTemplate(BucketTemplate? template) {
+    if (template == null) return;
     for (var element in templates) {
-      if (element.title == template!.title) {
+      if (element.title == template.title) {
         element.cloneCount = (element.cloneCount! + 1);
       }
     }
