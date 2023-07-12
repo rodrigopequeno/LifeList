@@ -30,6 +30,30 @@ void main() {
     'changeIndex',
     () {
       test(
+        'should be keep the same when invoke changeIndex with negative parameter',
+        () async {
+          final bottomBarService = BottomBarService();
+          final notifyListenerCalls = NotifyListenerCalls(bottomBarService);
+          expect(bottomBarService.currentIndex, equals(0));
+          bottomBarService.changeIndex(-1);
+          expect(bottomBarService.currentIndex, equals(0));
+          notifyListenerCalls.called(0);
+        },
+      );
+
+      test(
+        'should be keep the same when invoke changeIndex with parameter equals currentIndex',
+        () async {
+          final bottomBarService = BottomBarService();
+          final notifyListenerCalls = NotifyListenerCalls(bottomBarService);
+          expect(bottomBarService.currentIndex, equals(0));
+          bottomBarService.changeIndex(0);
+          expect(bottomBarService.currentIndex, equals(0));
+          notifyListenerCalls.called(0);
+        },
+      );
+
+      test(
         'should change index to 1 when invoke changeIndex',
         () async {
           final bottomBarService = BottomBarService();

@@ -36,6 +36,7 @@ class TaskService extends ChangeNotifier {
     //await bucketService.setActiveSingleBucket(bucket);
   }
 
+  // should update `completionPercentage` values and remove from task list when taskId is null.
   Future<void> deleteSingleTask(int? taskId, String taskName) async {
     if (taskId == null) {
       tasks.removeWhere(
@@ -64,17 +65,17 @@ class TaskService extends ChangeNotifier {
   }
 
   Future<void> updateSingleTask(Task task) async {
-    if (task.id == null) {
-      tasks[tasks.indexWhere((element) =>
-              task.id == element!.id && element.name == task.name)]!
-          .isComplete = !tasks[tasks.indexWhere((element) =>
-              task.id == element!.id && element.name == task.name)]!
-          .isComplete;
+    final index = tasks.indexWhere(
+        (element) => task.id == element!.id && element.name == task.name);
+    if (task.id == null && index >= 0) {
+      tasks[index]!.isComplete = !tasks[index]!.isComplete;
     } else {
       Iterable<Task?> foundTask =
           tasks.where((element) => task.id == element?.id);
-      foundTask.first?.isComplete = !foundTask.first!.isComplete;
-      await updateTaskInDB(task);
+      if (foundTask.isNotEmpty) {
+        foundTask.first?.isComplete = !foundTask.first!.isComplete;
+        await updateTaskInDB(task);
+      }
     }
     int doneTasks =
         tasks.where((element) => element!.isComplete == true).length;

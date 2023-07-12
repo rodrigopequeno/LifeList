@@ -43,10 +43,7 @@ void main() {
       test(
         'should return a BucketTemplate with a null values when json invalid',
         () {
-          final json = <String, dynamic>{
-            'deadline': Timestamp.now(),
-            'tasks': <String>[],
-          };
+          final json = <String, dynamic>{};
           final template = BucketTemplate.fromJson(json);
           expect(template, isA<BucketTemplate>());
           expect(template.cloneCount, isNull);
@@ -54,8 +51,8 @@ void main() {
           expect(template.scope, isNull);
           expect(template.category, isNull);
           expect(template.title, isNull);
-          expect(template.deadline, isNotNull);
-          expect(template.tasks, isNotNull);
+          expect(template.deadline, isNull);
+          expect(template.tasks, isNull);
           expect(template.isCompleted, isNull);
         },
       );
@@ -96,6 +93,25 @@ void main() {
               'task2',
             ],
             'isCompleted': true,
+          };
+          expect(json, expected);
+        },
+      );
+
+      test(
+        'should return a json from a valid BucketTemplate when is empty',
+        () {
+          final template = BucketTemplate();
+          final json = template.toJson();
+          final expected = {
+            'cloneCount': null,
+            'description': null,
+            'scope': null,
+            'category': null,
+            'title': null,
+            'deadline': null,
+            'tasks': null,
+            'isCompleted': null
           };
           expect(json, expected);
         },

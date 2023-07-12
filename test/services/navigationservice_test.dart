@@ -66,6 +66,7 @@ void main() {
       verify(
         () => navigator.pushNamed('navigateNext'),
       ).called(1);
+      verifyNoMoreInteractions(navigator);
     },
   );
 
@@ -77,6 +78,7 @@ void main() {
 
       verify(() => navigator.pushNamedAndRemoveUntil('navigateReset', any()))
           .called(1);
+      verifyNoMoreInteractions(navigator);
     },
   );
 
@@ -89,6 +91,7 @@ void main() {
       verify(
         () => navigator.pop(),
       ).called(1);
+      verifyNoMoreInteractions(navigator);
     },
   );
 }

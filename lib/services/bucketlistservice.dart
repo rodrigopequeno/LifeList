@@ -98,7 +98,9 @@ class BucketListService extends ChangeNotifier {
     notifyListeners();
   }
 
-  toggleScope(scope) {
+  toggleScope(BucketScope? scope) {
+    if (scope == null) return;
+
     selectedScope = scope;
     isScopeSelected = !(BucketScope.all == scope);
     notifyListeners();

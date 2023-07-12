@@ -24,8 +24,8 @@ class BucketTemplate {
     scope = json['scope'];
     category = json['category'];
     title = json['title'];
-    deadline = json['deadline'].toDate().toString();
-    tasks = json['tasks'].cast<String>();
+    deadline = json['deadline']?.toDate()?.toString();
+    tasks = json['tasks']?.cast<String>();
     isCompleted = json['isCompleted'];
   }
 

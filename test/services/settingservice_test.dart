@@ -59,6 +59,7 @@ void main() {
           expect(settingsService.loader, isFalse);
           verify(() => mockDBService.clearGlobalData()).called(1);
           notifyListenerCalls.called(1);
+          verifyNoMoreInteractions(mockDBService);
         },
       );
     },

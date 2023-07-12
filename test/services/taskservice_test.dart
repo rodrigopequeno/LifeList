@@ -75,6 +75,21 @@ void main() {
           ];
           final result = await taskService.addTaskstoDB(tasks);
           expect(result, equals([1]));
+          verify(() => mockDBService.addTasks(tasks)).called(1);
+          verifyNoMoreInteractions(mockDBService);
+        },
+      );
+
+      test(
+        'should add tasks to db empty when tasks is empty',
+        () async {
+          when(() => mockDBService.addTasks(any())).thenAnswer((_) async => []);
+
+          final tasks = <Task>[];
+          final result = await taskService.addTaskstoDB(tasks);
+          expect(result, isEmpty);
+          verify(() => mockDBService.addTasks(tasks)).called(1);
+          verifyNoMoreInteractions(mockDBService);
         },
       );
     },
@@ -137,6 +152,8 @@ void main() {
           await taskService.fetchActiveBucketTaskDetails([1], Bucket());
           expect(taskService.tasks, isNotEmpty);
           expect(taskService.completionPercentage, equals(50));
+          verify(() => mockDBService.getTasks([1])).called(1);
+          verifyNoMoreInteractions(mockDBService);
         },
       );
     },
@@ -173,6 +190,8 @@ void main() {
           expect(taskService.tasks, isNotEmpty);
           expect(taskService.completionPercentage, equals(50));
           notifyListenerCalls.called(1);
+          verify(() => mockDBService.deleteSingleTask(2)).called(1);
+          verifyNoMoreInteractions(mockDBService);
         },
       );
 
@@ -202,6 +221,7 @@ void main() {
           await taskService.deleteSingleTask(null, 'name');
           expect(taskService.tasks, isNotEmpty);
           notifyListenerCalls.called(1);
+          verifyNoMoreInteractions(mockDBService);
         },
       );
     },
@@ -318,6 +338,26 @@ void main() {
           notifyListenerCalls.called(1);
         },
       );
+
+      test(
+        'should add single temporary task when title contains only spaces',
+        () async {
+          taskService.addSingleTemporaryTask('   ');
+          expect(taskService.temporaryTasks, isNotEmpty);
+          expect(taskService.temporaryTasks.first.name, equals('   '));
+          notifyListenerCalls.called(1);
+        },
+      );
+
+      test(
+        'should add single temporary task when title contains only 1 character',
+        () async {
+          taskService.addSingleTemporaryTask('a');
+          expect(taskService.temporaryTasks, isNotEmpty);
+          expect(taskService.temporaryTasks.first.name, equals('a'));
+          notifyListenerCalls.called(1);
+        },
+      );
     },
   );
 
@@ -362,11 +402,42 @@ void main() {
           ];
           taskService.tasks = tasks;
           expect(taskService.tasks.first?.isComplete, isFalse);
-          await taskService.updateSingleTask(Task()..id = 1);
+          await taskService.updateSingleTask(
+            Task()
+              ..id = 1
+              ..name = '',
+          );
           expect(taskService.tasks.first?.isComplete, isTrue);
           expect(taskService.completionPercentage, equals(100));
           notifyListenerCalls.called(1);
           verify(() => mockDBService.updateTaskInDB(any())).called(1);
+          verifyNoMoreInteractions(mockDBService);
+        },
+      );
+
+      test(
+        'should update single task when task id is not null and task is not found',
+        () async {
+          when(() => mockDBService.updateTaskInDB(any()))
+              .thenAnswer((_) async {});
+          final tasks = [
+            Task()
+              ..id = 1
+              ..name = 'name'
+              ..priority = Priority.high
+              ..description = 'description'
+              ..deadline = DateTime.utc(2023)
+              ..isComplete = false
+              ..bucketId = -1
+          ];
+          taskService.tasks = tasks;
+          expect(taskService.tasks.first?.isComplete, isFalse);
+          await taskService.updateSingleTask(Task()..id = 2);
+          expect(taskService.tasks.first?.isComplete, isFalse);
+          expect(taskService.completionPercentage, equals(0));
+          notifyListenerCalls.called(1);
+          verifyNever(() => mockDBService.updateTaskInDB(any()));
+          verifyNoMoreInteractions(mockDBService);
         },
       );
     },

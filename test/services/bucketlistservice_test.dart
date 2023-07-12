@@ -65,7 +65,26 @@ void main() {
           await bucketListService.getAllBuckets();
           expect(bucketListService.buckets, isNotEmpty);
           expect(bucketListService.filteredBuckets, isNotEmpty);
+          verify(() => mockDBService.getBuckets()).called(1);
+          verifyNoMoreInteractions(mockDBService);
           notifyListenerCalls.called(1);
+        },
+      );
+
+      test(
+        'should only measure time left and sort list when currentAction different than 0',
+        () async {
+          when(() => mockDBService.getBuckets()).thenAnswer(
+            (_) async => [Bucket()],
+          );
+
+          bucketListService.currentAction = 1;
+          await bucketListService.getAllBuckets();
+          expect(bucketListService.buckets, isEmpty);
+          expect(bucketListService.filteredBuckets, isEmpty);
+          verifyNever(() => mockDBService.getBuckets());
+          verifyZeroInteractions(mockDBService);
+          notifyListenerCalls.called(0);
         },
       );
     },
@@ -185,6 +204,7 @@ void main() {
           await bucketListService.deleteBucket(bucket1);
           expect(bucketListService.buckets, isNot(contains(bucket1)));
           verify(() => mockDBService.deleteSingleBucket(bucket1.id)).called(1);
+          verifyNoMoreInteractions(mockDBService);
           notifyListenerCalls.called(1);
         },
       );
@@ -296,12 +316,45 @@ void main() {
     'toggleScope',
     () {
       test(
+        'should same scope when parameter is null',
+        () {
+          expect(bucketListService.selectedScope, equals(BucketScope.all));
+          bucketListService.toggleScope(null);
+          expect(bucketListService.selectedScope, equals(BucketScope.all));
+          expect(bucketListService.isScopeSelected, isFalse);
+          notifyListenerCalls.called(0);
+        },
+      );
+
+      test(
         'should toggle the scope to daily when current scope is all',
         () {
           expect(bucketListService.selectedScope, equals(BucketScope.all));
           bucketListService.toggleScope(BucketScope.daily);
           expect(bucketListService.selectedScope, equals(BucketScope.daily));
           expect(bucketListService.isScopeSelected, isTrue);
+          notifyListenerCalls.called(1);
+        },
+      );
+
+      test(
+        'should toggle the scope to onetime when current scope is all',
+        () {
+          expect(bucketListService.selectedScope, equals(BucketScope.all));
+          bucketListService.toggleScope(BucketScope.onetime);
+          expect(bucketListService.selectedScope, equals(BucketScope.onetime));
+          expect(bucketListService.isScopeSelected, isTrue);
+          notifyListenerCalls.called(1);
+        },
+      );
+
+      test(
+        'should toggle the scope to all when current scope is daily',
+        () {
+          bucketListService.selectedScope = BucketScope.daily;
+          bucketListService.toggleScope(BucketScope.all);
+          expect(bucketListService.selectedScope, equals(BucketScope.all));
+          expect(bucketListService.isScopeSelected, isFalse);
           notifyListenerCalls.called(1);
         },
       );

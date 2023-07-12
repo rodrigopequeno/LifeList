@@ -54,6 +54,16 @@ void main() {
           notifyListenerCalls.called(1);
         },
       );
+
+      test(
+        'should toggle status when status is true',
+        () async {
+          filterService.currentStatus = true;
+          filterService.toggleStatus(false);
+          expect(filterService.currentStatus, isFalse);
+          notifyListenerCalls.called(1);
+        },
+      );
     },
   );
 

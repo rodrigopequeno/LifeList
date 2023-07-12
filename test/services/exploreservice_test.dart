@@ -77,6 +77,7 @@ void main() {
           expect(exploreService.getData, 1);
           notifyListenerCalls.called(1);
           verify(() => mockFirebaseService.getTemplates()).called(1);
+          verifyNoMoreInteractions(mockFirebaseService);
         },
       );
 
@@ -90,6 +91,7 @@ void main() {
           expect(exploreService.getData, 1);
           notifyListenerCalls.called(0);
           verifyNever(() => mockFirebaseService.getTemplates());
+          verifyNoMoreInteractions(mockFirebaseService);
         },
       );
     },

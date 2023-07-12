@@ -97,6 +97,11 @@ void main() {
           expect(userService.user.age, 30);
           expect(userService.doNotShowSyncPopup, isTrue);
           notifyListenerCalls.called(1);
+          verify(() => mockDBService.getUserFromDB()).called(1);
+          verify(() => mockFirebaseService.checkIfUserExists('JohnDoe30'))
+              .called(1);
+          verifyNoMoreInteractions(mockDBService);
+          verifyNoMoreInteractions(mockFirebaseService);
         },
       );
 
@@ -119,6 +124,11 @@ void main() {
           expect(userService.user.age, 30);
           expect(userService.doNotShowSyncPopup, isFalse);
           notifyListenerCalls.called(1);
+          verify(() => mockDBService.getUserFromDB()).called(1);
+          verify(() => mockFirebaseService.checkIfUserExists('JohnDoe30'))
+              .called(1);
+          verifyNoMoreInteractions(mockDBService);
+          verifyNoMoreInteractions(mockFirebaseService);
         },
       );
 
@@ -133,6 +143,10 @@ void main() {
           await userService.getUser();
           expect(userService.user.id, -1);
           notifyListenerCalls.called(0);
+          verify(() => mockDBService.getUserFromDB()).called(1);
+          verifyNever(() => mockFirebaseService.checkIfUserExists(any()));
+          verifyNoMoreInteractions(mockDBService);
+          verifyNoMoreInteractions(mockFirebaseService);
         },
       );
     },
