@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lifelist/services/index.dart';
 import 'package:lifelist/services/navigationservice.dart';
@@ -88,7 +89,9 @@ UserService userService = UserService();
 BucketService bucketService = BucketService();
 NavigationService navigationService = NavigationService();
 TaskService taskService = TaskService();
-FirebaseService firebaseService = FirebaseService();
+FirebaseService firebaseService = FirebaseService(
+  firestore: FirebaseFirestore.instance,
+);
 
 const categories = [
   'Travel',

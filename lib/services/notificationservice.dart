@@ -5,35 +5,42 @@ import 'package:lifelist/utils/utils.dart';
 class NotificationService {
   static final NotificationService _notificationService =
       NotificationService._internal();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
   factory NotificationService() {
     return _notificationService;
   }
 
   NotificationService._internal();
 
-  Future<void> init() async {
+  Future<void> init({
+    required FlutterLocalNotificationsPlugin
+        flutterLocalNotificationsPluginInstance,
+  }) async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings(APP_LOGO);
 
     const InitializationSettings initializationSettings =
         InitializationSettings(
             android: initializationSettingsAndroid, iOS: null, macOS: null);
-    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin = flutterLocalNotificationsPluginInstance;
     bool? isPermissionGranted = await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
+        ?.resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.requestPermission();
     if (isPermissionGranted == true) {
-      await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+      await flutterLocalNotificationsPlugin?.initialize(initializationSettings);
     }
   }
 
-  void scheduleNotification(String title, String body, int id, bool isCompleted,
-      DateTime deadline) async {
+  void scheduleNotification(
+    String title,
+    String body,
+    int id,
+    bool isCompleted,
+    DateTime deadline,
+  ) async {
     final timeToNotify = getNotificationScheduleTime(deadline, isCompleted);
-    await flutterLocalNotificationsPlugin.zonedSchedule(
+    await flutterLocalNotificationsPlugin?.zonedSchedule(
         id,
         title,
         body,

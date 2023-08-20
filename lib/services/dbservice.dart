@@ -29,17 +29,18 @@ class DBService {
     List<Bucket?> buckets = [];
     await isar
         .writeTxn(() async => {buckets = await isar.buckets.where().findAll()});
-    buckets.forEach((element) async {
-      Duration difference = element!.deadline.difference(DateTime.now());
+    for (final bucket in buckets) {
+      Duration difference = bucket!.deadline.difference(DateTime.now());
       if (difference.isNegative) {
-        if (!element.isCompleted) {
-          element.streak = 0;
+        if (!bucket.isCompleted) {
+          bucket.streak = 0;
         }
-        element.isCompleted = false;
-        element.deadline = DateTime.now().add(const Duration(days: 1));
-        await editBucketInDB(element);
+        bucket.isCompleted = false;
+        bucket.deadline = DateTime.now().add(const Duration(days: 1));
+        await editBucketInDB(bucket);
       }
-    });
+    }
+
     return buckets;
   }
 
@@ -103,7 +104,8 @@ class DBService {
     List<User> user = [];
     await isar
         .writeTxn(() async => {user = await isar.users.where().findAll()});
-    return user[0];
+    if (user.isEmpty) return User();
+    return user.first;
   }
 
   Future<void> clearGlobalData() async {

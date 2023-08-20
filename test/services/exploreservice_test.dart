@@ -22,7 +22,6 @@ void main() {
 
   tearDown(() {
     dbService = DBService();
-    firebaseService = FirebaseService();
     notifyListenerCalls.dispose();
     exploreService.dispose();
   });

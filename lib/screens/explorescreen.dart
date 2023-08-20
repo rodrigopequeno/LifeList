@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lifelist/extensions/string_extensions.dart';
 import 'package:lifelist/models/template.dart';
@@ -493,7 +494,7 @@ class ExploreScreen extends StatelessWidget {
                                                                                     createBucketFromTemplate(bucketService, snapshot.data![index]!);
                                                                                     await bucketService.addBucketsFromTemplate(bucketService.activeSingleBucket, bucketService.activeBucketTasks, context);
                                                                                     await bucketService.clearData();
-                                                                                    await FirebaseService().editCloneCountInDB(snapshot.data![index]!.title);
+                                                                                    await FirebaseService(firestore: FirebaseFirestore.instance).editCloneCountInDB(snapshot.data![index]!.title);
                                                                                     exploreService.editCloneCountInTemplate(snapshot.data![index]);
                                                                                     navigationService.navigatePop(context);
                                                                                   },

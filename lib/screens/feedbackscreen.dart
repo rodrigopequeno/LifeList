@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:lifelist/services/email_sender_service.dart';
 
 import '../components/index.dart';
 import '../constants/index.dart';
@@ -20,12 +20,10 @@ class _FeedbackFormState extends State<FeedbackForm> {
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      final Email email = Email(
-          subject: _titleController.text,
-          body: _descriptionController.text,
-          recipients: [FEEDBACK_EMAIL],
-          isHTML: false);
-      await FlutterEmailSender.send(email);
+      EmailSenderService().sendEmail(
+        subject: _titleController.text,
+        body: _descriptionController.text,
+      );
     }
   }
 
