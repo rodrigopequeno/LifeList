@@ -7,7 +7,7 @@ import 'package:lifelist/models/index.dart';
 import 'package:lifelist/services/dbservice.dart';
 
 void main() {
-  const libFileName = 'libisar.dylib';
+  const libFileNames = ['libisar.dylib', 'libisar.so'];
   final methodCallLog = <MethodCall>[];
   late DBService dBService;
   late User mockUser;
@@ -17,8 +17,10 @@ void main() {
   });
 
   tearDownAll(() {
-    final file = File(libFileName);
-    if (file.existsSync()) file.deleteSync();
+    for (final libFileName in libFileNames) {
+      final file = File(libFileName);
+      if (file.existsSync()) file.deleteSync();
+    }
   });
 
   tearDown(() {
